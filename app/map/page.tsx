@@ -96,6 +96,54 @@ const HAZARDS = [
   },
 ]
 
+// Helper functions for styling
+function getMarkerColor(severity) {
+  switch (severity) {
+    case "Very Low":
+      return "bg-green-500";
+    case "Low":
+      return "bg-blue-500";
+    case "Medium":
+      return "bg-yellow-500";
+    case "High":
+      return "bg-orange-500";
+    case "Very High":
+      return "bg-red-500";
+    default:
+      return "bg-gray-500";
+  }
+}
+
+function getSeverityBadgeColor(severity) {
+  switch (severity) {
+    case "Very Low":
+      return "bg-green-100 text-green-800 hover:bg-green-100";
+    case "Low":
+      return "bg-blue-100 text-blue-800 hover:bg-blue-100";
+    case "Medium":
+      return "bg-yellow-100 text-yellow-800 hover:bg-yellow-100";
+    case "High":
+      return "bg-orange-100 text-orange-800 hover:bg-orange-100";
+    case "Very High":
+      return "bg-red-100 text-red-800 hover:bg-red-100";
+    default:
+      return "bg-gray-100 text-gray-800 hover:bg-gray-100";
+  }
+}
+
+function getStatusBadgeColor(status) {
+  switch (status) {
+    case "Pending":
+      return "text-yellow-600 border-yellow-200 bg-yellow-50";
+    case "In Progress":
+      return "text-blue-600 border-blue-200 bg-blue-50";
+    case "Resolved":
+      return "text-green-600 border-green-200 bg-green-50";
+    default:
+      return "text-gray-600 border-gray-200 bg-gray-50";
+  }
+}
+
 export default function MapPage() {
   const [selectedHazard, setSelectedHazard] = useState<typeof HAZARDS[0] | null>(null)
   const [filter, setFilter] = useState({
@@ -612,6 +660,110 @@ export default function MapPage() {
             
             <Card className="border-none shadow-md">
               <CardContent className="p-4">
-                <h3 className="font-bold mb-3">Actions</h3>
-                <div className="space-\
-
+                <h3 className="font-bold mb-3">How to Report</h3>
+                <div className="space-y-4">
+                  <p className="text-sm text-gray-600">
+                    Help keep your community safe by reporting hazards you encounter.
+                  </p>
+                  <ol className="text-sm text-gray-600 space-y-2 pl-4 list-decimal">
+                    <li>Pin the location on the map</li>
+                    <li>Select the hazard category</li>
+                    <li>Take a photo (optional)</li>
+                    <li>Submit your report</li>
+                  </ol>
+                  <Button className="w-full">
+                    Report a Hazard
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+      
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-8">
+        <div className="container px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <h3 className="font-bold text-lg mb-4">Safety Map</h3>
+              <p className="text-gray-400 text-sm">
+                Helping communities identify and resolve safety hazards through collective reporting and monitoring.
+              </p>
+            </div>
+            
+            <div>
+              <h3 className="font-bold text-lg mb-4">Quick Links</h3>
+              <ul className="space-y-2 text-sm text-gray-400">
+                <li><a href="#" className="hover:text-white transition-colors">About</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">How It Works</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Report a Hazard</a></li>
+                <li><a href="#" className="hover:text-white <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="font-bold text-lg mb-4">Connect With Us</h3>
+              <div className="flex space-x-4 mb-4">
+                <a href="#" className="bg-gray-700 hover:bg-gray-600 h-10 w-10 rounded-full flex items-center justify-center transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                  </svg>
+                </a>
+                <a href="#" className="bg-gray-700 hover:bg-gray-600 h-10 w-10 rounded-full flex items-center justify-center transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                  </svg>
+                </a>
+                <a href="#" className="bg-gray-700 hover:bg-gray-600 h-10 w-10 rounded-full flex items-center justify-center transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                </a>
+              </div>
+              <div>
+                <p className="text-sm text-gray-400 mb-2">Stay updated with our newsletter</p>
+                <div className="flex">
+                  <Input 
+                    type="email" 
+                    placeholder="Enter your email" 
+                    className="bg-gray-800 border-gray-700 text-sm rounded-r-none focus-visible:ring-gray-600"
+                  />
+                  <Button className="rounded-l-none">
+                    Subscribe
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="border-t border-gray-800 mt-8 pt-6 text-center text-sm text-gray-500">
+            <p>&copy; {new Date().getFullYear()} Safety Map. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+      
+      {/* Custom CSS for map markers */}
+      <style jsx>{`
+        .hazard-marker {
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: all 0.2s;
+          border: 2px solid white;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .hazard-marker:hover {
+          width: 20px;
+          height: 20px;
+          z-index: 10;
+        }
+      `}</style>
+    </div>
+  )
+}
