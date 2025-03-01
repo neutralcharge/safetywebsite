@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import { useEffect, useRef, useState } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { MapPin, Search, Filter, AlertTriangle, ThumbsUp, MessageSquare, Calendar } from "lucide-react"
-import Image from "next/image"
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MapPin, Search, Filter, AlertTriangle, ThumbsUp, MessageSquare, Calendar } from "lucide-react";
+import Image from "next/image";
 
 // Register ScrollTrigger plugin
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger)
+  gsap.registerPlugin(ScrollTrigger);
 }
 
 // Sample hazard data
@@ -94,10 +94,10 @@ const HAZARDS = [
     lng: -74.046,
     image: "/placeholder.svg?height=300&width=400",
   },
-]
+];
 
 // Helper functions for styling
-function getMarkerColor(severity) {
+function getMarkerColor(severity: string) {
   switch (severity) {
     case "Very Low":
       return "bg-green-500";
@@ -114,7 +114,7 @@ function getMarkerColor(severity) {
   }
 }
 
-function getSeverityBadgeColor(severity) {
+function getSeverityBadgeColor(severity: string) {
   switch (severity) {
     case "Very Low":
       return "bg-green-100 text-green-800 hover:bg-green-100";
@@ -131,7 +131,7 @@ function getSeverityBadgeColor(severity) {
   }
 }
 
-function getStatusBadgeColor(status) {
+function getStatusBadgeColor(status: string) {
   switch (status) {
     case "Pending":
       return "text-yellow-600 border-yellow-200 bg-yellow-50";
@@ -145,79 +145,79 @@ function getStatusBadgeColor(status) {
 }
 
 export default function MapPage() {
-  const [selectedHazard, setSelectedHazard] = useState<typeof HAZARDS[0] | null>(null)
+  const [selectedHazard, setSelectedHazard] = useState<typeof HAZARDS[0] | null>(null);
   const [filter, setFilter] = useState({
     category: "all",
     severity: "all",
-    status: "all"
-  })
-  
-  const headerRef = useRef(null)
-  const mapRef = useRef(null)
-  const filtersRef = useRef(null)
-  const listRef = useRef(null)
+    status: "all",
+  });
+
+  const headerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<HTMLDivElement>(null);
+  const filtersRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Header animation
     gsap.fromTo(
       headerRef.current,
       { opacity: 0, y: 50 },
-      { 
-        opacity: 1, 
-        y: 0, 
-        duration: 1, 
-        ease: "power3.out" 
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
       }
-    )
+    );
 
     // Map animation
     gsap.fromTo(
       mapRef.current,
       { opacity: 0, scale: 0.95 },
-      { 
-        opacity: 1, 
+      {
+        opacity: 1,
         scale: 1,
-        duration: 0.8, 
+        duration: 0.8,
         ease: "power2.out",
-        delay: 0.3
+        delay: 0.3,
       }
-    )
+    );
 
     // Filters animation
     gsap.fromTo(
       filtersRef.current,
       { opacity: 0, y: 20 },
-      { 
-        opacity: 1, 
+      {
+        opacity: 1,
         y: 0,
-        duration: 0.5, 
+        duration: 0.5,
         ease: "power1.out",
-        delay: 0.5
+        delay: 0.5,
       }
-    )
+    );
 
     // List animation
     gsap.fromTo(
       ".hazard-card",
       { opacity: 0, x: 20 },
-      { 
-        opacity: 1, 
+      {
+        opacity: 1,
         x: 0,
         stagger: 0.1,
-        duration: 0.5, 
+        duration: 0.5,
         ease: "power1.out",
-        delay: 0.7
+        delay: 0.7,
       }
-    )
+    );
 
     // Cleanup function
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
-    }
-  }, [])
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
 
   // Filter hazards based on current filters
-  const filteredHazards = HAZARDS.filter(hazard => {
+  const filteredHazards = HAZARDS.filter((hazard) => {
     if (filter.category !== "all" && hazard.category !== filter.category) return false;
     if (filter.severity !== "all" && hazard.severity !== filter.severity) return false;
     if (filter.status !== "all" && hazard.status !== filter.status) return false;
@@ -229,14 +229,14 @@ export default function MapPage() {
       {/* Header Section */}
       <section className="relative py-16 bg-blue-600 text-white">
         <div className="absolute inset-0 z-0 opacity-20">
-          <Image 
-            src="/placeholder.svg?height=600&width=1920" 
-            alt="Background pattern" 
-            fill 
+          <Image
+            src="/placeholder.svg?height=600&width=1920"
+            alt="Background pattern"
+            fill
             className="object-cover"
           />
         </div>
-        
+
         <div ref={headerRef} className="container relative z-10 px-4 text-center">
           <Badge className="mb-4 px-4 py-2 text-sm bg-white text-blue-600 hover:bg-gray-100">Live Data</Badge>
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Safety Map</h1>
@@ -258,22 +258,22 @@ export default function MapPage() {
                     <div className="flex-1 w-full">
                       <div className="relative">
                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                        <Input 
-                          placeholder="Search by location or keyword..." 
+                        <Input
+                          placeholder="Search by location or keyword..."
                           className="pl-10"
                         />
                       </div>
                     </div>
-                    
+
                     <div className="flex flex-wrap gap-4 items-center w-full md:w-auto">
                       <div className="flex items-center gap-2">
                         <Filter className="h-4 w-4 text-gray-500" />
                         <span className="text-sm text-gray-500">Filters:</span>
                       </div>
-                      
-                      <Select 
+
+                      <Select
                         defaultValue="all"
-                        onValueChange={(value) => setFilter({...filter, category: value})}
+                        onValueChange={(value) => setFilter({ ...filter, category: value })}
                       >
                         <SelectTrigger className="w-[160px]">
                           <SelectValue placeholder="Category" />
@@ -286,10 +286,10 @@ export default function MapPage() {
                           <SelectItem value="Debris/Obstruction">Debris/Obstruction</SelectItem>
                         </SelectContent>
                       </Select>
-                      
-                      <Select 
+
+                      <Select
                         defaultValue="all"
-                        onValueChange={(value) => setFilter({...filter, severity: value})}
+                        onValueChange={(value) => setFilter({ ...filter, severity: value })}
                       >
                         <SelectTrigger className="w-[160px]">
                           <SelectValue placeholder="Severity" />
@@ -303,10 +303,10 @@ export default function MapPage() {
                           <SelectItem value="Very High">Very High</SelectItem>
                         </SelectContent>
                       </Select>
-                      
-                      <Select 
+
+                      <Select
                         defaultValue="all"
-                        onValueChange={(value) => setFilter({...filter, status: value})}
+                        onValueChange={(value) => setFilter({ ...filter, status: value })}
                       >
                         <SelectTrigger className="w-[160px]">
                           <SelectValue placeholder="Status" />
@@ -323,47 +323,47 @@ export default function MapPage() {
                 </CardContent>
               </Card>
             </div>
-            
+
             {/* Map */}
             <div className="lg:col-span-2">
               <Card ref={mapRef} className="border-none shadow-xl h-[700px] overflow-hidden">
                 <CardContent className="p-0 h-full relative">
                   <div className="absolute inset-0">
-                    <Image 
-                      src="/placeholder.svg?height=700&width=1000" 
-                      alt="Interactive map" 
+                    <Image
+                      src="/placeholder.svg?height=700&width=1000"
+                      alt="Interactive map"
                       fill
                       className="object-cover"
                     />
                   </div>
-                  
+
                   {/* Sample hazard markers */}
                   {HAZARDS.map((hazard) => (
-                    <div 
+                    <div
                       key={hazard.id}
                       className={`absolute hazard-marker cursor-pointer ${getMarkerColor(hazard.severity)}`}
-                      style={{ 
-                        top: `${Math.random() * 80 + 10}%`, 
-                        left: `${Math.random() * 80 + 10}%` 
+                      style={{
+                        top: `${Math.random() * 80 + 10}%`,
+                        left: `${Math.random() * 80 + 10}%`,
                       }}
                       onClick={() => setSelectedHazard(hazard)}
                     ></div>
                   ))}
-                  
+
                   {/* Selected hazard popup */}
                   {selectedHazard && (
-                    <div 
+                    <div
                       className="absolute bg-white rounded-lg shadow-xl p-4 w-64 z-10"
-                      style={{ 
-                        top: '30%', 
-                        left: '40%',
-                        transform: 'translate(-50%, -100%)'
+                      style={{
+                        top: "30%",
+                        left: "40%",
+                        transform: "translate(-50%, -100%)",
                       }}
                     >
                       <div className="relative h-32 mb-3">
-                        <Image 
-                          src={selectedHazard.image || "/placeholder.svg"} 
-                          alt={selectedHazard.title} 
+                        <Image
+                          src={selectedHazard.image || "/placeholder.svg"}
+                          alt={selectedHazard.title}
                           fill
                           className="object-cover rounded-md"
                         />
@@ -398,7 +398,6 @@ export default function MapPage() {
                 </CardContent>
               </Card>
             </div>
-            
             {/* Hazard List */}
             <div ref={listRef} className="lg:col-span-1">
               <Tabs defaultValue="list" className="w-full">
